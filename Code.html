@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        #problemDescription {
+            width: 100%;
+            height: 150px;
+            margin: 10px 0;
+            padding: 10px;
+        }
+        #generateButton {
+            display: block;
+            margin: 0 auto;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        #generatedCode {
+            white-space: pre-wrap;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Code Generator</h1>
+    <textarea id="problemDescription" placeholder="Describe your coding problem..."></textarea>
+    <button id="generateButton">Generate Code</button>
+    <pre id="generatedCode"></pre>
+
+    <script>
+        const generateButton = document.getElementById('generateButton');
+        const problemDescription = document.getElementById('problemDescription');
+        const generatedCode = document.getElementById('generatedCode');
+
+        generateButton.addEventListener('click', async () => {
+            const apiKey = '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'; // Replace with your actual API key
+            
+            const response = await fetch('/generate-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    problemDescription: problemDescription.value
+                })
+            });
+
+            const data = await response.json();
+            generatedCode.textContent = data.generatedCode;
+        });
+    </script>
+</body>
+</html>
